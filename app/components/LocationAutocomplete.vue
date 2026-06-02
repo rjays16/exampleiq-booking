@@ -116,12 +116,10 @@ async function selectPrediction(prediction: google.maps.places.AutocompletePredi
   showPredictions.value = false
   emit('update:modelValue', prediction.description)
 
-  const geocoder = new google.maps.Geocoder()
-  geocoder.geocode({ placeId: prediction.place_id }, (results, status) => {
-    if (status === google.maps.GeocoderStatus.OK && results?.[0]?.geometry?.location) {
-      const lat = results[0].geometry.location.lat()
-      const lng = results[0].geometry.location.lng()
-      emit('place-changed', lat, lng, prediction.description)
+  const placesService = new google.maps.places.PlacesService(document.createElement('div'))
+  placesService.getDetails({ placeId: prediction.place_id }, (place: any, status: any) => {
+    if (status === google.maps.places.PlacesServiceStatus.OK && place?.geometry?.location) {
+      emit('place-changed', place.geometry.location.lat(), place.geometry.location.lng(), prediction.description)
     }
   })
 }

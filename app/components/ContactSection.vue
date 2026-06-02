@@ -78,7 +78,7 @@ defineEmits<{ submit: [] }>()
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
 }
@@ -115,13 +115,13 @@ defineEmits<{ submit: [] }>()
   background: transparent;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   flex: 1;
 }
 
 .warning-text {
   margin-bottom: 16px;
-  font-size: 13px;
+  font-size: 14px;
   color: #c8a548;
 }
 
@@ -158,11 +158,11 @@ defineEmits<{ submit: [] }>()
 
 .floating-label {
   position: absolute;
-  top: -8px;
+  top: -10px;
   left: 12px;
   background: #fff;
   padding: 0 4px;
-  font-size: 11px;
+  font-size: 13px;
   color: #8a8a8a;
   z-index: 10;
 }
@@ -180,7 +180,7 @@ defineEmits<{ submit: [] }>()
   border: none;
   background: transparent;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .input::placeholder {
@@ -189,7 +189,7 @@ defineEmits<{ submit: [] }>()
 
 .error-text {
   margin-top: 6px;
-  font-size: 12px;
+  font-size: 13px;
   color: #e53e3e;
 }
 
@@ -205,7 +205,7 @@ defineEmits<{ submit: [] }>()
 
 .passengers-question {
   margin-bottom: 16px;
-  font-size: 15px;
+  font-size: 16px;
   color: #c8a548;
   font-weight: 500;
 }

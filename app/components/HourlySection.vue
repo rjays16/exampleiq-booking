@@ -26,7 +26,7 @@ const hours = defineModel<string>({ default: '' })
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
 }
@@ -42,11 +42,11 @@ const hours = defineModel<string>({ default: '' })
 
 .floating-label {
   position: absolute;
-  top: -8px;
+  top: -10px;
   left: 12px;
   background: #fff;
   padding: 0 4px;
-  font-size: 11px;
+  font-size: 13px;
   color: #8a8a8a;
   z-index: 10;
 }
@@ -73,13 +73,13 @@ const hours = defineModel<string>({ default: '' })
   height: 100%;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   background: transparent;
 }
 
 .error-text {
   margin-top: 6px;
-  font-size: 12px;
+  font-size: 13px;
   color: #e53e3e;
 }
 </style>

@@ -92,7 +92,7 @@ function removeStop(i: number) {
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
 }
@@ -121,7 +121,7 @@ function removeStop(i: number) {
 
 .error-text {
   margin-top: 6px;
-  font-size: 12px;
+  font-size: 13px;
   color: #e53e3e;
 }
 
@@ -134,7 +134,7 @@ function removeStop(i: number) {
 .tab {
   padding: 8px 20px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -162,11 +162,11 @@ function removeStop(i: number) {
 
 .floating-label {
   position: absolute;
-  top: -8px;
+  top: -10px;
   left: 12px;
   background: #fff;
   padding: 0 4px;
-  font-size: 11px;
+  font-size: 13px;
   color: #8a8a8a;
   z-index: 10;
 }
@@ -192,7 +192,7 @@ function removeStop(i: number) {
   background: transparent;
   outline: none;
   color: #444;
-  font-size: 14px;
+  font-size: 15px;
   width: 100%;
 }
 
@@ -204,7 +204,7 @@ function removeStop(i: number) {
 }
 
 .add-stop {
-  font-size: 14px;
+  font-size: 15px;
   color: #c8a548;
   background: none;
   border: none;

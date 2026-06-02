@@ -75,7 +75,7 @@ defineProps<{ submitted: boolean }>()
   gap: 8px;
   border: none;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .divider {
@@ -101,7 +101,7 @@ defineProps<{ submitted: boolean }>()
 
 .error-text {
   margin-top: 6px;
-  font-size: 12px;
+  font-size: 13px;
   color: #e53e3e;
 }
 

@@ -54,7 +54,7 @@ defineProps<{ submitted: boolean }>()
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: #222;
 }
@@ -68,7 +68,7 @@ defineProps<{ submitted: boolean }>()
 .tab {
   padding: 8px 20px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 15px;
   cursor: pointer;
 }
 
@@ -95,11 +95,11 @@ defineProps<{ submitted: boolean }>()
 
 .floating-label {
   position: absolute;
-  top: -8px;
+  top: -10px;
   left: 12px;
   background: #fff;
   padding: 0 4px;
-  font-size: 11px;
+  font-size: 13px;
   color: #8a8a8a;
   z-index: 10;
 }
@@ -133,7 +133,7 @@ defineProps<{ submitted: boolean }>()
   background: transparent;
   outline: none;
   color: #444;
-  font-size: 14px;
+  font-size: 15px;
   width: 100%;
 }
 

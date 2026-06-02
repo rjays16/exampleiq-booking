@@ -219,9 +219,8 @@ defineEmits<{ submit: [] }>()
 .name-field .error-text,
 .email-field .error-text,
 .passengers-field .error-text {
-  position: absolute;
-  bottom: -18px;
-  left: 4px;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
 
 .continue-btn {

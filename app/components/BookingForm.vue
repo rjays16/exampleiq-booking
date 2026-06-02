@@ -1,67 +1,40 @@
 <template>
-  <div class="min-h-screen bg-gray-100 py-10">
-    <div class="max-w-3xl mx-auto">
+  <div class="min-h-screen bg-white">
+    <div class="mx-auto max-w-[1100px] px-8 py-6">
 
       <!-- Logo -->
-      <div class="flex justify-center mb-8">
+      <div class="flex justify-center mb-10">
         <img
           src="/images/logo.png"
           alt="ExampleIQ"
-          class="w-48"
+          class="h-[70px] w-auto"
         />
       </div>
 
-      <div class="bg-white rounded-lg shadow-sm p-8">
+      <!-- Title -->
+      <h1 class="mb-6 text-[40px] font-normal italic text-[#232323]" style="font-family: Georgia, serif;">
+        Let's get you on your way!
+      </h1>
 
-        <!-- Heading -->
-        <h1 class="text-3xl font-semibold mb-6">
-          Let's get you on your way!
-        </h1>
-
-        <!-- Trip Type -->
-        <div class="grid grid-cols-2 gap-0 mb-8 rounded-lg overflow-hidden border border-gray-300">
-
-          <button
-            class="flex items-center justify-center gap-2 py-3 bg-yellow-600 text-white font-medium text-sm"
-          >
-            <Icon name="mdi:arrow-right-circle" />
-            <span>One-way</span>
-          </button>
-
-          <button
-            class="flex items-center justify-center gap-2 py-3 bg-white text-gray-600 font-medium text-sm"
-          >
-            <Icon name="mdi:timer-sand" />
-            <span>Hourly</span>
-          </button>
-
-        </div>
-
-        <!-- Form Fields Card -->
-        <div class="border border-gray-200 rounded-lg divide-y divide-gray-100">
-
-          <div class="flex items-center gap-4 p-4">
-            <Icon name="mdi:map-marker" class="text-yellow-600 text-xl shrink-0" />
-            <span class="flex-1 text-gray-800">Pickup Location</span>
-            <Icon name="mdi:chevron-right" class="text-gray-400" />
-          </div>
-
-          <div class="flex items-center gap-4 p-4">
-            <Icon name="mdi:phone" class="text-yellow-600 text-xl shrink-0" />
-            <span class="flex-1 text-gray-800">Phone Number</span>
-            <Icon name="mdi:chevron-right" class="text-gray-400" />
-          </div>
-
-          <div class="flex items-center gap-4 p-4">
-            <Icon name="mdi:calendar" class="text-yellow-600 text-xl shrink-0" />
-            <span class="flex-1 text-gray-800">Pickup Date</span>
-            <Icon name="mdi:chevron-right" class="text-gray-400" />
-          </div>
-
-        </div>
-
+      <!-- Trip Type -->
+      <div class="mb-8 flex h-[46px] overflow-hidden rounded border border-[#d8d8d8]">
+        <button class="flex flex-1 items-center justify-center gap-2 border-r border-[#c8a548] bg-[#fffdf7] font-medium text-[#c8a548]">
+          <Icon name="lucide:arrow-right-circle" class="h-4 w-4" />
+          One-way
+        </button>
+        <button class="flex flex-1 items-center justify-center gap-2 text-[#666]">
+          <Icon name="lucide:hourglass" class="h-4 w-4" />
+          Hourly
+        </button>
       </div>
+
+      <PickupSection />
+      <DropoffSection />
+      <ContactSection />
 
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+</script>

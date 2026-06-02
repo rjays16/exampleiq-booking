@@ -1,9 +1,10 @@
 <template>
   <div class="page">
     <div class="container">
-      <BookingForm :submitted="submitted" />
+      <BookingForm v-model="tripType" :submitted="submitted" />
       <PickupSection :submitted="submitted" />
       <DropoffSection :submitted="submitted" />
+      <HourlySection v-if="tripType === 'hourly'" v-model="hours" :submitted="submitted" />
       <ContactSection :submitted="submitted" @submit="handleSubmit" />
     </div>
   </div>
@@ -11,6 +12,8 @@
 
 <script setup lang="ts">
 const submitted = ref(false)
+const tripType = ref('')
+const hours = ref('1')
 
 function handleSubmit() {
   submitted.value = true

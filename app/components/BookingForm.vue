@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-const tripType = ref('')
+const tripType = defineModel<string>({ default: '' })
 
 defineProps<{ submitted: boolean }>()
 </script>

@@ -3,18 +3,12 @@
     <h2 class="section-title">Pickup</h2>
 
     <div class="date-time-row">
-      <div class="field-card" :class="{ invalid: submitted && !pickupDate }">
-        <div class="field-inner field-date">
-          <Icon name="lucide:calendar" class="field-icon" />
-          <input v-model="pickupDate" type="text" placeholder="MM/DD/YYYY" class="field-input" />
-        </div>
+      <div class="date-field" :class="{ invalid: submitted && !pickupDate }">
+        <DatePicker v-model="pickupDate" placeholder="MM/DD/YYYY" :invalid="submitted && !pickupDate" />
         <p v-if="submitted && !pickupDate" class="error-text">Date is required</p>
       </div>
-      <div class="field-card" :class="{ invalid: submitted && !pickupTime }">
-        <div class="field-inner field-time">
-          <Icon name="lucide:clock-3" class="field-icon" />
-          <input v-model="pickupTime" type="text" placeholder="HH:MM AM/PM" class="field-input" />
-        </div>
+      <div class="time-field" :class="{ invalid: submitted && !pickupTime }">
+        <TimePicker v-model="pickupTime" placeholder="HH:MM AM/PM" :invalid="submitted && !pickupTime" />
         <p v-if="submitted && !pickupTime" class="error-text">Time is required</p>
       </div>
     </div>
@@ -46,8 +40,8 @@
 </template>
 
 <script setup lang="ts">
-const pickupDate = ref('05/13/2023')
-const pickupTime = ref('3:00 PM')
+const pickupDate = ref('')
+const pickupTime = ref('')
 const pickupLocation = ref('Clintons Bar & Grille, High Street, Clinton, MA, USA')
 const pickupTab = ref('Location')
 const pickupTabs = ['Location', 'Airport']
@@ -73,36 +67,12 @@ defineProps<{ submitted: boolean }>()
   margin-bottom: 16px;
 }
 
-.field-card {
-  width: fit-content;
-  border-radius: 4px;
-  border: 1px solid #d9d9d9;
-  padding: 12px;
-}
-
-.field-card.invalid {
-  border-color: #e53e3e;
-}
-
-.field-inner {
-  display: flex;
-  height: 52px;
-  align-items: center;
-  border-radius: 4px;
-  border: 1px solid #d9d9d9;
-  padding: 0 16px;
-}
-
-.field-card.invalid .field-inner {
-  border-color: #e53e3e;
-}
-
-.field-date {
+.date-field {
   width: 400px;
 }
 
-.field-time {
-  width: 150px;
+.time-field {
+  width: 180px;
 }
 
 .field-icon {
@@ -111,13 +81,6 @@ defineProps<{ submitted: boolean }>()
   color: #c8a548;
   margin-right: 12px;
   flex-shrink: 0;
-}
-
-.field-input {
-  width: 100%;
-  border: none;
-  background: transparent;
-  outline: none;
 }
 
 .error-text {
@@ -218,11 +181,8 @@ defineProps<{ submitted: boolean }>()
     flex-direction: column;
   }
 
-  .field-card {
-    width: 100%;
-  }
-
-  .field-inner {
+  .date-field,
+  .time-field {
     width: 100% !important;
   }
 
@@ -241,11 +201,11 @@ defineProps<{ submitted: boolean }>()
     text-align: center;
   }
 
-  .field-date {
+  .date-field {
     width: 100% !important;
   }
 
-  .field-time {
+  .time-field {
     width: 100% !important;
   }
 }

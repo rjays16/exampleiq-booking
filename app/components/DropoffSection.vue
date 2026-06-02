@@ -12,7 +12,7 @@
       >{{ tab }}</button>
     </div>
 
-    <div class="location-field" :class="{ invalid: submitted && !dropoffLocation }">
+    <div v-if="dropoffTab === 'Location'" class="location-field" :class="{ invalid: submitted && !dropoffLocation }">
       <label class="floating-label">Location</label>
       <div class="location-input">
         <div class="location-value">
@@ -23,11 +23,24 @@
       </div>
       <p v-if="submitted && !dropoffLocation" class="error-text">Drop-off location is required</p>
     </div>
+
+    <div v-if="dropoffTab === 'Airport'" class="location-field" :class="{ invalid: submitted && !dropoffAirport }">
+      <label class="floating-label">Airport</label>
+      <div class="location-input">
+        <div class="location-value">
+          <Icon name="lucide:plane" class="field-icon" />
+          <input v-model="dropoffAirport" type="text" placeholder="Enter drop-off airport" class="location-text" />
+        </div>
+        <Icon name="lucide:chevron-down" class="chevron" />
+      </div>
+      <p v-if="submitted && !dropoffAirport" class="error-text">Drop-off airport is required</p>
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
-const dropoffLocation = ref('Logan Airport Terminal B, Boston, MA, USA')
+const dropoffLocation = ref('')
+const dropoffAirport = ref('')
 const dropoffTab = ref('Location')
 const dropoffTabs = ['Location', 'Airport']
 

@@ -23,7 +23,7 @@
       >{{ tab }}</button>
     </div>
 
-    <div class="location-field" :class="{ invalid: submitted && !pickupLocation }">
+    <div v-if="pickupTab === 'Location'" class="location-field" :class="{ invalid: submitted && !pickupLocation }">
       <label class="floating-label">Location</label>
       <div class="location-input">
         <div class="location-value">
@@ -35,6 +35,18 @@
       <p v-if="submitted && !pickupLocation" class="error-text">Pickup location is required</p>
     </div>
 
+    <div v-if="pickupTab === 'Airport'" class="location-field" :class="{ invalid: submitted && !pickupAirport }">
+      <label class="floating-label">Airport</label>
+      <div class="location-input">
+        <div class="location-value">
+          <Icon name="lucide:plane" class="field-icon" />
+          <input v-model="pickupAirport" type="text" placeholder="Enter pickup airport" class="location-text" />
+        </div>
+        <Icon name="lucide:chevron-down" class="chevron" />
+      </div>
+      <p v-if="submitted && !pickupAirport" class="error-text">Pickup airport is required</p>
+    </div>
+
     <button class="add-stop">+ Add a stop</button>
   </section>
 </template>
@@ -43,6 +55,7 @@
 const pickupDate = ref('')
 const pickupTime = ref('')
 const pickupLocation = ref('Clintons Bar & Grille, High Street, Clinton, MA, USA')
+const pickupAirport = ref('')
 const pickupTab = ref('Location')
 const pickupTabs = ['Location', 'Airport']
 

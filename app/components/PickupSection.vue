@@ -67,7 +67,7 @@
 <script setup lang="ts">
 const pickupDate = ref('')
 const pickupTime = ref('')
-const pickupLocation = ref('Clintons Bar & Grille, High Street, Clinton, MA, USA')
+const pickupLocation = ref('')
 const pickupAirport = ref('')
 const pickupTab = ref('Location')
 const pickupTabs = ['Location', 'Airport']

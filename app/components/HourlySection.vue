@@ -2,20 +2,21 @@
   <section class="hourly-section">
     <h2 class="section-title">Hourly Booking</h2>
 
-    <div class="hours-field" :class="{ invalid: submitted && !hours }">
+    <div class="hours-field" :class="{ invalid: submitted && (!hours || Number(hours) < 1) }">
       <label class="floating-label">Number of hours</label>
       <div class="hours-input-wrap">
         <Icon name="lucide:clock" class="field-icon" />
         <input v-model="hours" type="number" min="1" max="24" placeholder=" " class="hours-input" />
       </div>
       <p v-if="submitted && !hours" class="error-text">Number of hours is required</p>
+      <p v-if="submitted && hours && Number(hours) < 1" class="error-text">Minimum 1 hour required</p>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 defineProps<{ submitted: boolean }>()
-const hours = defineModel<string>({ default: '1' })
+const hours = defineModel<string>({ default: '' })
 </script>
 
 <style scoped>

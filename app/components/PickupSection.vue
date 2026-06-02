@@ -47,7 +47,20 @@
       <p v-if="submitted && !pickupAirport" class="error-text">Pickup airport is required</p>
     </div>
 
-    <button class="add-stop">+ Add a stop</button>
+    <div v-for="(stop, i) in stops" :key="i" class="stop-field">
+      <label class="floating-label">Stop {{ i + 1 }}</label>
+      <div class="location-input">
+        <div class="location-value">
+          <Icon name="lucide:map-pin" class="field-icon" />
+          <input v-model="stops[i]" type="text" :placeholder="'Enter stop ' + (i + 1)" class="location-text" />
+        </div>
+        <button class="remove-btn" @click="removeStop(i)">
+          <Icon name="lucide:x" class="remove-icon" />
+        </button>
+      </div>
+    </div>
+
+    <button class="add-stop" @click="addStop">+ Add a stop</button>
   </section>
 </template>
 
@@ -60,6 +73,16 @@ const pickupTab = ref('Location')
 const pickupTabs = ['Location', 'Airport']
 
 defineProps<{ submitted: boolean }>()
+
+const stops = ref<string[]>([])
+
+function addStop() {
+  stops.value.push('')
+}
+
+function removeStop(i: number) {
+  stops.value.splice(i, 1)
+}
 </script>
 
 <style scoped>
@@ -187,6 +210,33 @@ defineProps<{ submitted: boolean }>()
   border: none;
   cursor: pointer;
   padding: 0;
+}
+
+.stop-field {
+  position: relative;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.remove-icon {
+  width: 16px;
+  height: 16px;
+  color: #999;
+}
+
+.remove-btn:hover .remove-icon {
+  color: #e53e3e;
 }
 
 @media (max-width: 768px) {

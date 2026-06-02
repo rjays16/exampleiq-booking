@@ -3,25 +3,35 @@
     <h2 class="section-title">Drop off</h2>
 
     <div class="tabs">
-      <button class="tab tab-active">Location</button>
-      <button class="tab tab-inactive">Airport</button>
+      <button
+        v-for="tab in dropoffTabs"
+        :key="tab"
+        class="tab"
+        :class="dropoffTab === tab ? 'tab-active' : 'tab-inactive'"
+        @click="dropoffTab = tab"
+      >{{ tab }}</button>
     </div>
 
-    <!-- Dropoff Floating Label Location -->
-    <div class="location-field">
+    <div class="location-field" :class="{ invalid: submitted && !dropoffLocation }">
       <label class="floating-label">Location</label>
       <div class="location-input">
         <div class="location-value">
           <Icon name="lucide:map-pin" class="field-icon" />
-          <span class="location-text">Logan Airport Terminal B, Boston, MA, USA</span>
+          <input v-model="dropoffLocation" type="text" placeholder="Enter drop-off location" class="location-text" />
         </div>
         <Icon name="lucide:chevron-down" class="chevron" />
       </div>
+      <p v-if="submitted && !dropoffLocation" class="error-text">Drop-off location is required</p>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+const dropoffLocation = ref('Logan Airport Terminal B, Boston, MA, USA')
+const dropoffTab = ref('Location')
+const dropoffTabs = ['Location', 'Airport']
+
+defineProps<{ submitted: boolean }>()
 </script>
 
 <style scoped>
@@ -66,6 +76,10 @@
   margin-top: 8px;
 }
 
+.location-field.invalid .location-input {
+  border-color: #e53e3e;
+}
+
 .floating-label {
   position: absolute;
   top: -8px;
@@ -90,6 +104,7 @@
 .location-value {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .field-icon {
@@ -101,8 +116,12 @@
 }
 
 .location-text {
+  border: none;
+  background: transparent;
+  outline: none;
   color: #444;
   font-size: 14px;
+  width: 100%;
 }
 
 .chevron {
@@ -110,5 +129,11 @@
   height: 16px;
   color: #666;
   flex-shrink: 0;
+}
+
+.error-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e53e3e;
 }
 </style>

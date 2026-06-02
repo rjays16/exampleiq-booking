@@ -5,19 +5,32 @@
 
   <h1 class="title">Let's get you on your way!</h1>
 
-  <div class="trip-type">
-    <button class="btn btn-active">
+  <div class="trip-type" :class="{ invalid: submitted && !tripType }">
+    <button
+      class="btn"
+      :class="tripType === 'one-way' ? 'btn-active' : 'btn-inactive'"
+      @click="tripType = 'one-way'"
+    >
       <Icon name="lucide:arrow-right-circle" class="icon" />
       One-way
     </button>
-    <button class="btn btn-inactive">
+    <span class="divider"></span>
+    <button
+      class="btn"
+      :class="tripType === 'hourly' ? 'btn-active' : 'btn-inactive'"
+      @click="tripType = 'hourly'"
+    >
       <Icon name="lucide:hourglass" class="icon" />
       Hourly
     </button>
   </div>
+  <p v-if="submitted && !tripType" class="error-text">Please select a trip type</p>
 </template>
 
 <script setup lang="ts">
+const tripType = ref('')
+
+defineProps<{ submitted: boolean }>()
 </script>
 
 <style scoped>
@@ -50,6 +63,10 @@
   margin-bottom: 32px;
 }
 
+.trip-type.invalid {
+  border-color: #e53e3e;
+}
+
 .btn {
   flex: 1;
   display: flex;
@@ -61,11 +78,15 @@
   font-size: 14px;
 }
 
+.divider {
+  width: 1px;
+  background: #d8d8d8;
+}
+
 .btn-active {
   background-color: #fffdf7;
   color: #c8a548;
   font-weight: 500;
-  border-right: 1px solid #c8a548;
 }
 
 .btn-inactive {
@@ -76,6 +97,12 @@
 .icon {
   width: 16px;
   height: 16px;
+}
+
+.error-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e53e3e;
 }
 
 @media (max-width: 768px) {

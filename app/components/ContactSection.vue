@@ -2,9 +2,10 @@
   <section class="contact-section">
     <h2 class="section-title">Contact Information</h2>
 
-    <div class="phone-field">
+    <div class="phone-field" :class="{ invalid: submitted && !phone }">
       <span class="flag">🇺🇸</span>
-      <input value="+1 774 415 3244" class="phone-input" />
+      <input v-model="phone" type="text" placeholder="+1 XXX XXX XXXX" class="phone-input" />
+      <p v-if="submitted && !phone" class="error-text">Phone number is required</p>
     </div>
 
     <p class="warning-text">
@@ -12,29 +13,32 @@
     </p>
 
     <div class="name-row">
-      <div class="name-field">
+      <div class="name-field" :class="{ invalid: submitted && !firstName }">
         <label class="floating-label">First name</label>
         <div class="name-input">
           <Icon name="lucide:user" class="field-icon" />
-          <input placeholder="First name" class="input" />
+          <input v-model="firstName" placeholder="First name" class="input" />
         </div>
+        <p v-if="submitted && !firstName" class="error-text">Required</p>
       </div>
 
-      <div class="name-field">
+      <div class="name-field" :class="{ invalid: submitted && !lastName }">
         <label class="floating-label">Last name</label>
         <div class="name-input">
           <Icon name="lucide:user" class="field-icon" />
-          <input placeholder="Last name" class="input" />
+          <input v-model="lastName" placeholder="Last name" class="input" />
         </div>
+        <p v-if="submitted && !lastName" class="error-text">Required</p>
       </div>
     </div>
 
-    <div class="email-field">
+    <div class="email-field" :class="{ invalid: submitted && !email }">
       <label class="floating-label">Email</label>
       <div class="email-input">
         <Icon name="lucide:mail" class="field-icon" />
-        <input placeholder="name@example.com" class="input" />
+        <input v-model="email" placeholder="name@example.com" class="input" />
       </div>
+      <p v-if="submitted && !email" class="error-text">Email is required</p>
     </div>
 
     <div class="passengers-section">
@@ -42,20 +46,29 @@
         How many passengers are expected for the trip?
       </div>
 
-      <div class="passengers-field">
+      <div class="passengers-field" :class="{ invalid: submitted && (!passengers || Number(passengers) < 1) }">
         <label class="floating-label"># Passengers</label>
         <div class="passengers-input">
           <Icon name="lucide:hash" class="field-icon" />
-          <input value="1" class="input" />
+          <input v-model="passengers" type="number" min="1" class="input" />
         </div>
+        <p v-if="submitted && (!passengers || Number(passengers) < 1)" class="error-text">At least 1 passenger required</p>
       </div>
     </div>
 
-    <button class="continue-btn">Continue</button>
+    <button class="continue-btn" @click="$emit('submit')">Continue</button>
   </section>
 </template>
 
 <script setup lang="ts">
+const phone = ref('+1 774 415 3244')
+const firstName = ref('')
+const lastName = ref('')
+const email = ref('')
+const passengers = ref('1')
+
+defineProps<{ submitted: boolean }>()
+defineEmits<{ submit: [] }>()
 </script>
 
 <style scoped>
@@ -71,6 +84,7 @@
 }
 
 .phone-field {
+  position: relative;
   display: flex;
   height: 52px;
   align-items: center;
@@ -78,6 +92,17 @@
   border: 1px solid #d9d9d9;
   padding: 0 16px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.phone-field.invalid {
+  border-color: #e53e3e;
+}
+
+.phone-field .error-text {
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: -8px;
 }
 
 .flag {
@@ -91,6 +116,7 @@
   border: none;
   outline: none;
   font-size: 14px;
+  flex: 1;
 }
 
 .warning-text {
@@ -111,6 +137,12 @@
 .passengers-field {
   position: relative;
   margin-top: 8px;
+}
+
+.name-field.invalid .name-input,
+.email-field.invalid .email-input,
+.passengers-field.invalid .passengers-input {
+  border-color: #e53e3e;
 }
 
 .name-input,
@@ -155,6 +187,12 @@
   color: #bbb;
 }
 
+.error-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e53e3e;
+}
+
 .email-field {
   position: relative;
   margin-top: 8px;
@@ -176,6 +214,15 @@
   width: 190px;
   position: relative;
   margin-top: 8px;
+}
+
+.phone-field .error-text,
+.name-field .error-text,
+.email-field .error-text,
+.passengers-field .error-text {
+  position: absolute;
+  bottom: -18px;
+  left: 4px;
 }
 
 .continue-btn {

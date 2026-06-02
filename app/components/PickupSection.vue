@@ -2,38 +2,43 @@
   <section class="pickup-section">
     <h2 class="section-title">Pickup</h2>
 
-    <!-- Pickup Date + Time -->
     <div class="date-time-row">
-      <div class="field-card">
+      <div class="field-card" :class="{ invalid: submitted && !pickupDate }">
         <div class="field-inner field-date">
           <Icon name="lucide:calendar" class="field-icon" />
-          <input type="text" value="05/13/2023" class="field-input" />
+          <input v-model="pickupDate" type="text" placeholder="MM/DD/YYYY" class="field-input" />
         </div>
+        <p v-if="submitted && !pickupDate" class="error-text">Date is required</p>
       </div>
-      <div class="field-card">
+      <div class="field-card" :class="{ invalid: submitted && !pickupTime }">
         <div class="field-inner field-time">
           <Icon name="lucide:clock-3" class="field-icon" />
-          <input type="text" value="3:00 PM" class="field-input" />
+          <input v-model="pickupTime" type="text" placeholder="HH:MM AM/PM" class="field-input" />
         </div>
+        <p v-if="submitted && !pickupTime" class="error-text">Time is required</p>
       </div>
     </div>
 
-    <!-- Pickup Tabs -->
     <div class="tabs">
-      <button class="tab tab-active">Location</button>
-      <button class="tab tab-inactive">Airport</button>
+      <button
+        v-for="tab in pickupTabs"
+        :key="tab"
+        class="tab"
+        :class="pickupTab === tab ? 'tab-active' : 'tab-inactive'"
+        @click="pickupTab = tab"
+      >{{ tab }}</button>
     </div>
 
-    <!-- Pickup Floating Label Location -->
-    <div class="location-field">
+    <div class="location-field" :class="{ invalid: submitted && !pickupLocation }">
       <label class="floating-label">Location</label>
       <div class="location-input">
         <div class="location-value">
           <Icon name="lucide:map-pin" class="field-icon" />
-          <span class="location-text">Clintons Bar &amp; Grille, High Street, Clinton, MA, USA</span>
+          <input v-model="pickupLocation" type="text" placeholder="Enter pickup location" class="location-text" />
         </div>
         <Icon name="lucide:chevron-down" class="chevron" />
       </div>
+      <p v-if="submitted && !pickupLocation" class="error-text">Pickup location is required</p>
     </div>
 
     <button class="add-stop">+ Add a stop</button>
@@ -41,6 +46,13 @@
 </template>
 
 <script setup lang="ts">
+const pickupDate = ref('05/13/2023')
+const pickupTime = ref('3:00 PM')
+const pickupLocation = ref('Clintons Bar & Grille, High Street, Clinton, MA, USA')
+const pickupTab = ref('Location')
+const pickupTabs = ['Location', 'Airport']
+
+defineProps<{ submitted: boolean }>()
 </script>
 
 <style scoped>
@@ -68,6 +80,10 @@
   padding: 12px;
 }
 
+.field-card.invalid {
+  border-color: #e53e3e;
+}
+
 .field-inner {
   display: flex;
   height: 52px;
@@ -75,6 +91,10 @@
   border-radius: 4px;
   border: 1px solid #d9d9d9;
   padding: 0 16px;
+}
+
+.field-card.invalid .field-inner {
+  border-color: #e53e3e;
 }
 
 .field-date {
@@ -98,6 +118,12 @@
   border: none;
   background: transparent;
   outline: none;
+}
+
+.error-text {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #e53e3e;
 }
 
 .tabs {
@@ -131,6 +157,10 @@
   margin-bottom: 20px;
 }
 
+.location-field.invalid .location-input {
+  border-color: #e53e3e;
+}
+
 .floating-label {
   position: absolute;
   top: -8px;
@@ -155,11 +185,16 @@
 .location-value {
   display: flex;
   align-items: center;
+  flex: 1;
 }
 
 .location-text {
+  border: none;
+  background: transparent;
+  outline: none;
   color: #444;
   font-size: 14px;
+  width: 100%;
 }
 
 .chevron {
@@ -193,9 +228,6 @@
 
   .location-text {
     font-size: 13px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 }
 

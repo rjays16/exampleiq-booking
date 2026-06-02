@@ -1,15 +1,20 @@
 <template>
   <div class="page">
     <div class="container">
-      <BookingForm />
-      <PickupSection />
-      <DropoffSection />
-      <ContactSection />
+      <BookingForm :submitted="submitted" />
+      <PickupSection :submitted="submitted" />
+      <DropoffSection :submitted="submitted" />
+      <ContactSection :submitted="submitted" @submit="handleSubmit" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+const submitted = ref(false)
+
+function handleSubmit() {
+  submitted.value = true
+}
 </script>
 
 <style scoped>

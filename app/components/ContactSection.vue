@@ -61,11 +61,11 @@
 </template>
 
 <script setup lang="ts">
-const phone = ref('+1 774 415 3244')
+const phone = ref('')
 const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
-const passengers = ref('1')
+const passengers = ref('')
 
 defineProps<{ submitted: boolean }>()
 defineEmits<{ submit: [] }>()
@@ -86,7 +86,7 @@ defineEmits<{ submit: [] }>()
 .phone-field {
   position: relative;
   display: flex;
-  height: 52px;
+  min-height: 52px;
   align-items: center;
   border-radius: 4px;
   border: 1px solid #d9d9d9;
@@ -102,7 +102,7 @@ defineEmits<{ submit: [] }>()
 .phone-field .error-text {
   width: 100%;
   margin-top: 4px;
-  margin-bottom: -8px;
+  margin-bottom: 4px;
 }
 
 .flag {
@@ -216,7 +216,6 @@ defineEmits<{ submit: [] }>()
   margin-top: 8px;
 }
 
-.phone-field .error-text,
 .name-field .error-text,
 .email-field .error-text,
 .passengers-field .error-text {

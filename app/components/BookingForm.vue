@@ -77,4 +77,16 @@
   width: 16px;
   height: 16px;
 }
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
+  }
+}
 </style>

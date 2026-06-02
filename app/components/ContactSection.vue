@@ -194,4 +194,20 @@
 .continue-btn:hover {
   opacity: 0.95;
 }
+
+@media (max-width: 768px) {
+  .name-row {
+    grid-template-columns: 1fr;
+  }
+
+  .passengers-field {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .passengers-question {
+    font-size: 14px;
+  }
+}
 </style>

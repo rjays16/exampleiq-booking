@@ -177,4 +177,44 @@
   cursor: pointer;
   padding: 0;
 }
+
+@media (max-width: 768px) {
+  .date-time-row {
+    flex-direction: column;
+  }
+
+  .field-card {
+    width: 100%;
+  }
+
+  .field-inner {
+    width: 100% !important;
+  }
+
+  .location-text {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    display: flex;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+  }
+
+  .field-date {
+    width: 100% !important;
+  }
+
+  .field-time {
+    width: 100% !important;
+  }
+}
 </style>

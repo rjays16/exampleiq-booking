@@ -2,8 +2,8 @@
   <div class="page">
     <div class="container">
       <BookingForm v-model="tripType" :submitted="submitted" />
-      <PickupSection :submitted="submitted" />
-      <DropoffSection :submitted="submitted" />
+      <PickupSection :submitted="submitted" @pickup-coords="onPickupCoords" />
+      <DropoffSection :submitted="submitted" @dropoff-coords="onDropoffCoords" />
       <HourlySection v-if="tripType === 'hourly'" v-model="hours" :submitted="submitted" />
       <ContactSection :submitted="submitted" @submit="handleSubmit" />
     </div>
@@ -14,6 +14,16 @@
 const submitted = ref(false)
 const tripType = ref('')
 const hours = ref('1')
+const pickupCoords = ref<{ lat: number; lng: number } | null>(null)
+const dropoffCoords = ref<{ lat: number; lng: number } | null>(null)
+
+function onPickupCoords(lat: number, lng: number) {
+  pickupCoords.value = { lat, lng }
+}
+
+function onDropoffCoords(lat: number, lng: number) {
+  dropoffCoords.value = { lat, lng }
+}
 
 function handleSubmit() {
   submitted.value = true

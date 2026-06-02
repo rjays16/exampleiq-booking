@@ -23,16 +23,16 @@
       >{{ tab }}</button>
     </div>
 
-    <div v-if="pickupTab === 'Location'" class="location-field" :class="{ invalid: submitted && !pickupLocation }">
-      <label class="floating-label">Location</label>
-      <div class="location-input">
-        <div class="location-value">
-          <Icon name="lucide:map-pin" class="field-icon" />
-          <input v-model="pickupLocation" type="text" placeholder="Enter pickup location" class="location-text" />
-        </div>
-        <Icon name="lucide:chevron-down" class="chevron" />
-      </div>
-      <p v-if="submitted && !pickupLocation" class="error-text">Pickup location is required</p>
+    <div v-if="pickupTab === 'Location'">
+      <LocationAutocomplete
+        v-model="pickupLocation"
+        placeholder="Enter pickup location"
+        label="Location"
+        icon="lucide:map-pin"
+        :invalid="submitted && !pickupLocation"
+        error-msg="Pickup location is required"
+        @place-changed="onPickupPlace"
+      />
     </div>
 
     <div v-if="pickupTab === 'Airport'" class="location-field" :class="{ invalid: submitted && !pickupAirport }">
@@ -73,8 +73,15 @@ const pickupTab = ref('Location')
 const pickupTabs = ['Location', 'Airport']
 
 defineProps<{ submitted: boolean }>()
+const emit = defineEmits<{
+  'pickup-coords': [lat: number, lng: number]
+}>()
 
 const stops = ref<string[]>([])
+
+function onPickupPlace(lat: number, lng: number) {
+  emit('pickup-coords', lat, lng)
+}
 
 function addStop() {
   stops.value.push('')

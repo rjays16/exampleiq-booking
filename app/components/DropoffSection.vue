@@ -12,16 +12,16 @@
       >{{ tab }}</button>
     </div>
 
-    <div v-if="dropoffTab === 'Location'" class="location-field" :class="{ invalid: submitted && !dropoffLocation }">
-      <label class="floating-label">Location</label>
-      <div class="location-input">
-        <div class="location-value">
-          <Icon name="lucide:map-pin" class="field-icon" />
-          <input v-model="dropoffLocation" type="text" placeholder="Enter drop-off location" class="location-text" />
-        </div>
-        <Icon name="lucide:chevron-down" class="chevron" />
-      </div>
-      <p v-if="submitted && !dropoffLocation" class="error-text">Drop-off location is required</p>
+    <div v-if="dropoffTab === 'Location'">
+      <LocationAutocomplete
+        v-model="dropoffLocation"
+        placeholder="Enter drop-off location"
+        label="Location"
+        icon="lucide:map-pin"
+        :invalid="submitted && !dropoffLocation"
+        error-msg="Drop-off location is required"
+        @place-changed="onDropoffPlace"
+      />
     </div>
 
     <div v-if="dropoffTab === 'Airport'" class="location-field" :class="{ invalid: submitted && !dropoffAirport }">
@@ -45,6 +45,13 @@ const dropoffTab = ref('Location')
 const dropoffTabs = ['Location', 'Airport']
 
 defineProps<{ submitted: boolean }>()
+const emit = defineEmits<{
+  'dropoff-coords': [lat: number, lng: number]
+}>()
+
+function onDropoffPlace(lat: number, lng: number) {
+  emit('dropoff-coords', lat, lng)
+}
 </script>
 
 <style scoped>

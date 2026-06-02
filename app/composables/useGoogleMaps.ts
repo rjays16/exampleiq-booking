@@ -1,43 +1,72 @@
-import { Loader } from '@googlemaps/js-api-loader'
-
-let loader: Loader | null = null
+declare const google: any
 
 export function useGoogleMaps() {
   const config = useRuntimeConfig()
   const apiKey = config.public.googleMapsApiKey as string
 
-  if (!loader) {
-    loader = new Loader({
-      apiKey,
-      version: 'weekly',
-      libraries: ['places']
+  let loaded = false
+  let loadPromise: Promise<void> | null = null
+
+  async function loadPlaces() {
+    if (loaded) return
+    if (loadPromise) return loadPromise
+
+    loadPromise = new Promise<void>((resolve, reject) => {
+      if (typeof google !== 'undefined' && google.maps?.places) {
+        loaded = true
+        resolve()
+        return
+      }
+
+      const existing = document.querySelector('script[src*="maps.googleapis.com"]')
+      if (existing) {
+        const check = setInterval(() => {
+          if (typeof google !== 'undefined' && google.maps?.places) {
+            clearInterval(check)
+            loaded = true
+            resolve()
+          }
+        }, 100)
+        return
+      }
+
+      const script = document.createElement('script')
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places&callback=__gmap_loaded`
+      script.async = true
+      script.defer = true
+      ;(window as any).__gmap_loaded = () => {
+        loaded = true
+        resolve()
+      }
+      script.onerror = reject
+      document.head.appendChild(script)
     })
+
+    return loadPromise
   }
 
-  async function loadPlacesService(): Promise<google.maps.places.PlacesService> {
-    await loader!.load()
-    return new google.maps.places.PlacesService(document.createElement('div'))
-  }
-
-  async function loadAutocompleteService(): Promise<google.maps.places.AutocompleteService> {
-    await loader!.load()
-    return new google.maps.places.AutocompleteService()
-  }
-
-  async function getDistanceMatrix(origins: google.maps.LatLngLiteral[], destinations: google.maps.LatLngLiteral[]): Promise<google.maps.DistanceMatrixResponse> {
-    await loader!.load()
-    return new Promise((resolve, reject) => {
+  async function getDistanceMatrix(origins: { lat: number; lng: number }[], destinations: { lat: number; lng: number }[]) {
+    await loadPlaces()
+    return new Promise<{ distance: string; duration: string }>((resolve, reject) => {
       const service = new google.maps.DistanceMatrixService()
       service.getDistanceMatrix(
         {
-          origins: origins.map(o => new google.maps.LatLng(o.lat, o.lng)),
-          destinations: destinations.map(d => new google.maps.LatLng(d.lat, d.lng)),
+          origins: origins.map((o: any) => new google.maps.LatLng(o.lat, o.lng)),
+          destinations: destinations.map((d: any) => new google.maps.LatLng(d.lat, d.lng)),
           travelMode: google.maps.TravelMode.DRIVING,
           unitSystem: google.maps.UnitSystem.IMPERIAL
         },
-        (result, status) => {
+        (result: any, status: any) => {
           if (status === google.maps.DistanceMatrixStatus.OK && result) {
-            resolve(result)
+            const element = result.rows[0]?.elements[0]
+            if (element?.status === 'OK') {
+              resolve({
+                distance: element.distance.text,
+                duration: element.duration.text
+              })
+            } else {
+              reject(new Error('No route found'))
+            }
           } else {
             reject(new Error(`Distance Matrix failed: ${status}`))
           }
@@ -47,8 +76,7 @@ export function useGoogleMaps() {
   }
 
   return {
-    loadPlacesService,
-    loadAutocompleteService,
+    loadPlaces,
     getDistanceMatrix
   }
 }

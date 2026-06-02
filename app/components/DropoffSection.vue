@@ -1,27 +1,21 @@
 <template>
-  <section class="mb-10">
-    <h2 class="mb-4 text-[16px] font-semibold text-[#222]">Drop off</h2>
+  <section class="dropoff-section">
+    <h2 class="section-title">Drop off</h2>
 
-    <div class="mb-4 inline-flex gap-1">
-      <button class="rounded border border-[#c8a548] px-5 py-2 text-[#c8a548] bg-white">
-        Location
-      </button>
-      <button class="rounded border border-[#d9d9d9] px-5 py-2 text-[#666]">
-        Airport
-      </button>
+    <div class="tabs">
+      <button class="tab tab-active">Location</button>
+      <button class="tab tab-inactive">Airport</button>
     </div>
 
     <!-- Dropoff Floating Label Location -->
-    <div class="relative mt-2">
-      <label class="absolute -top-2 left-3 bg-white px-1 text-[11px] text-[#8a8a8a] z-10">
-        Location
-      </label>
-      <div class="flex h-[52px] items-center justify-between rounded border border-[#d9d9d9] px-3">
-        <div class="flex items-center">
-          <Icon name="lucide:map-pin" class="mr-3 h-4 w-4 text-[#c8a548]" />
-          <span class="text-[#444]">Logan Airport Terminal B, Boston, MA, USA</span>
+    <div class="location-field">
+      <label class="floating-label">Location</label>
+      <div class="location-input">
+        <div class="location-value">
+          <Icon name="lucide:map-pin" class="field-icon" />
+          <span class="location-text">Logan Airport Terminal B, Boston, MA, USA</span>
         </div>
-        <Icon name="lucide:chevron-down" class="h-4 w-4 text-[#666]" />
+        <Icon name="lucide:chevron-down" class="chevron" />
       </div>
     </div>
   </section>
@@ -29,3 +23,92 @@
 
 <script setup lang="ts">
 </script>
+
+<style scoped>
+.dropoff-section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #222;
+}
+
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.tab {
+  padding: 8px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tab-active {
+  border: 1px solid #c8a548;
+  color: #c8a548;
+  background: #fff;
+}
+
+.tab-inactive {
+  border: 1px solid #d9d9d9;
+  color: #666;
+  background: #fff;
+}
+
+.location-field {
+  position: relative;
+  margin-top: 8px;
+}
+
+.floating-label {
+  position: absolute;
+  top: -8px;
+  left: 12px;
+  background: #fff;
+  padding: 0 4px;
+  font-size: 11px;
+  color: #8a8a8a;
+  z-index: 10;
+}
+
+.location-input {
+  display: flex;
+  height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  padding: 0 12px;
+}
+
+.location-value {
+  display: flex;
+  align-items: center;
+}
+
+.field-icon {
+  width: 16px;
+  height: 16px;
+  color: #c8a548;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.location-text {
+  color: #444;
+  font-size: 14px;
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  color: #666;
+  flex-shrink: 0;
+}
+</style>

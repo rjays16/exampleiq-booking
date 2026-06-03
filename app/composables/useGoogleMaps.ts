@@ -47,7 +47,7 @@ export function useGoogleMaps() {
 
   async function getDistanceMatrix(origins: { lat: number; lng: number }[], destinations: { lat: number; lng: number }[]) {
     await loadPlaces()
-    return new Promise<{ distance: string; duration: string }>((resolve, reject) => {
+    return new Promise<{ distance: string; duration: string; distanceValue: number; durationValue: number }>((resolve, reject) => {
       const service = new google.maps.DistanceMatrixService()
       service.getDistanceMatrix(
         {
@@ -62,7 +62,9 @@ export function useGoogleMaps() {
             if (element?.status === 'OK') {
               resolve({
                 distance: element.distance.text,
-                duration: element.duration.text
+                duration: element.duration.text,
+                distanceValue: element.distance.value,
+                durationValue: element.duration.value
               })
             } else {
               reject(new Error('No route found'))

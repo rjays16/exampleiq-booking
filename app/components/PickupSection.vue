@@ -47,17 +47,20 @@
       <p v-if="submitted && !pickupAirport" class="error-text">Pickup airport is required</p>
     </div>
 
-    <div v-for="(stop, i) in stops" :key="i" class="stop-field">
-      <label class="floating-label">Stop {{ i + 1 }}</label>
-      <div class="location-input">
-        <div class="location-value">
-          <Icon name="lucide:map-pin" class="field-icon" />
-          <input v-model="stops[i]" type="text" :placeholder="'Enter stop ' + (i + 1)" class="location-text" />
-        </div>
-        <button class="remove-btn" @click="removeStop(i)">
-          <Icon name="lucide:x" class="remove-icon" />
-        </button>
+    <div v-for="(stop, i) in stops" :key="i" class="stop-row">
+      <div class="stop-field">
+        <LocationAutocomplete
+          :model-value="stop"
+          :placeholder="'Enter stop ' + (i + 1)"
+          :label="'Stop ' + (i + 1)"
+          icon="lucide:map-pin"
+          @update:model-value="(val: string) => stops[i] = val"
+          @place-changed="(lat, lng) => onStopPlace(i, lat, lng)"
+        />
       </div>
+      <button class="remove-btn" @click="removeStop(i)">
+        <Icon name="lucide:x" class="remove-icon" />
+      </button>
     </div>
 
     <button class="add-stop" @click="addStop">+ Add a stop</button>
@@ -75,13 +78,23 @@ const pickupTabs = ['Location', 'Airport']
 defineProps<{ submitted: boolean }>()
 const emit = defineEmits<{
   'pickup-coords': [lat: number, lng: number]
+  'stop-coords': [coords: { lat: number; lng: number }[]]
 }>()
 
 const stops = ref<string[]>([])
+const stopCoords = ref<{ lat: number; lng: number }[]>([])
 
 function onPickupPlace(lat: number, lng: number) {
   emit('pickup-coords', lat, lng)
 }
+
+function onStopPlace(index: number, lat: number, lng: number) {
+  stopCoords.value[index] = { lat, lng }
+}
+
+watch(stopCoords, () => {
+  emit('stop-coords', stopCoords.value.filter(Boolean))
+}, { deep: true })
 
 function addStop() {
   stops.value.push('')
@@ -89,6 +102,7 @@ function addStop() {
 
 function removeStop(i: number) {
   stops.value.splice(i, 1)
+  stopCoords.value.splice(i, 1)
 }
 
 defineExpose({
@@ -228,10 +242,16 @@ defineExpose({
   padding: 0;
 }
 
-.stop-field {
-  position: relative;
-  margin-top: 8px;
+.stop-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 8px;
+}
+
+.stop-field {
+  flex: 1;
+  min-width: 0;
 }
 
 .remove-btn {
@@ -243,6 +263,7 @@ defineExpose({
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-top: 8px;
 }
 
 .remove-icon {

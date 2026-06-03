@@ -20,33 +20,65 @@
 const props = defineProps<{
   pickupCoords: { lat: number; lng: number } | null
   dropoffCoords: { lat: number; lng: number } | null
+  stopCoords: { lat: number; lng: number }[]
 }>()
 
 const distance = ref('')
 const duration = ref('')
 const prevKey = ref('')
 
-watch([() => props.pickupCoords, () => props.dropoffCoords], async ([pickup, dropoff]) => {
-  if (!pickup || !dropoff) {
-    distance.value = ''
-    duration.value = ''
-    return
-  }
+watch(
+  [() => props.pickupCoords, () => props.dropoffCoords, () => props.stopCoords.map(c => `${c.lat},${c.lng}`).join('|')],
+  async ([pickup, dropoff]) => {
+    if (!pickup || !dropoff) {
+      distance.value = ''
+      duration.value = ''
+      return
+    }
 
-  const key = `${pickup.lat},${pickup.lng}-${dropoff.lat},${dropoff.lng}`
-  if (key === prevKey.value) return
-  prevKey.value = key
+    const stops = props.stopCoords.filter(Boolean)
+    const key = `${pickup.lat},${pickup.lng}-${dropoff.lat},${dropoff.lng}|${stops.map(s => `${s.lat},${s.lng}`).join(';')}`
+    if (key === prevKey.value) return
+    prevKey.value = key
 
-  const { getDistanceMatrix } = useGoogleMaps()
-  try {
-    const result = await getDistanceMatrix([pickup], [dropoff])
-    distance.value = result.distance
-    duration.value = result.duration
-  } catch {
-    distance.value = ''
-    duration.value = ''
-  }
-}, { immediate: false })
+    const { getDistanceMatrix } = useGoogleMaps()
+    const legs: { origin: { lat: number; lng: number }; destination: { lat: number; lng: number } }[] = []
+
+    if (stops.length === 0) {
+      legs.push({ origin: pickup, destination: dropoff })
+    } else {
+      legs.push({ origin: pickup, destination: stops[0] })
+      for (let i = 0; i < stops.length - 1; i++) {
+        legs.push({ origin: stops[i], destination: stops[i + 1] })
+      }
+      legs.push({ origin: stops[stops.length - 1], destination: dropoff })
+    }
+
+    try {
+      let totalMeters = 0
+      let totalSeconds = 0
+      let unit = 'mi'
+
+      for (const leg of legs) {
+        const result = await getDistanceMatrix([leg.origin], [leg.destination])
+        totalMeters += result.distanceValue
+        totalSeconds += result.durationValue
+        unit = result.distance.includes('km') ? 'km' : 'mi'
+      }
+
+      const miles = totalMeters / 1609.344
+      const hours = Math.floor(totalSeconds / 3600)
+      const mins = Math.round((totalSeconds % 3600) / 60)
+
+      distance.value = miles.toFixed(1) + ' ' + unit
+      duration.value = hours > 0 ? `${hours} hr ${mins} mins` : `${mins} mins`
+    } catch {
+      distance.value = ''
+      duration.value = ''
+    }
+  },
+  { immediate: false, deep: true }
+)
 </script>
 
 <style scoped>

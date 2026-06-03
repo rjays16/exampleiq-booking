@@ -5,10 +5,10 @@
       <BookingConfirmed v-if="bookingResult" :booking="bookingResult" />
 
       <template v-else>
-        <BookingForm v-model="tripType" :submitted="submitted" />
-        <PickupSection ref="pickupRef" :submitted="submitted" @pickup-coords="onPickupCoords" />
-        <DropoffSection ref="dropoffRef" :submitted="submitted" @dropoff-coords="onDropoffCoords" />
-        <TripSummary :pickup-coords="pickupCoords" :dropoff-coords="dropoffCoords" />
+      <BookingForm v-model="tripType" :submitted="submitted" />
+      <PickupSection ref="pickupRef" :submitted="submitted" @pickup-coords="onPickupCoords" @stop-coords="onStopCoords" />
+      <DropoffSection ref="dropoffRef" :submitted="submitted" @dropoff-coords="onDropoffCoords" />
+      <TripSummary :pickup-coords="pickupCoords" :dropoff-coords="dropoffCoords" :stop-coords="stopCoords" />
         <HourlySection v-if="tripType === 'hourly'" ref="hourlyRef" v-model="hours" :submitted="submitted" />
         <ContactSection ref="contactRef" :submitted="submitted" @submit="handleSubmit" />
 
@@ -28,6 +28,7 @@ const tripType = ref('')
 const hours = ref('1')
 const pickupCoords = ref<{ lat: number; lng: number } | null>(null)
 const dropoffCoords = ref<{ lat: number; lng: number } | null>(null)
+const stopCoords = ref<{ lat: number; lng: number }[]>([])
 const bookingResult = ref<{
   success: boolean
   message: string
@@ -46,6 +47,10 @@ function onPickupCoords(lat: number, lng: number) {
 
 function onDropoffCoords(lat: number, lng: number) {
   dropoffCoords.value = { lat, lng }
+}
+
+function onStopCoords(coords: { lat: number; lng: number }[]) {
+  stopCoords.value = coords
 }
 
 function isValid(): boolean {

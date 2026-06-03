@@ -19,6 +19,10 @@
           <span class="detail-label">Pickup Location</span>
           <span class="detail-value">{{ booking.data.pickupLocation }}</span>
         </div>
+        <div v-for="(stop, i) in booking.data.stops" :key="i" class="detail-row">
+          <span class="detail-label">Stop {{ i + 1 }}</span>
+          <span class="detail-value">{{ stop }}</span>
+        </div>
         <div v-if="booking.data.dropoffLocation" class="detail-row">
           <span class="detail-label">Drop-off Location</span>
           <span class="detail-value">{{ booking.data.dropoffLocation }}</span>

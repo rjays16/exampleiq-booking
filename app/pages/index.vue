@@ -7,10 +7,10 @@
       <template v-else>
       <BookingForm v-model="tripType" :submitted="submitted" />
       <PickupSection ref="pickupRef" :submitted="submitted" @pickup-coords="onPickupCoords" @stop-coords="onStopCoords" />
-      <DropoffSection ref="dropoffRef" :submitted="submitted" @dropoff-coords="onDropoffCoords" />
-      <TripSummary :pickup-coords="pickupCoords" :dropoff-coords="dropoffCoords" :stop-coords="stopCoords" />
-        <HourlySection v-if="tripType === 'hourly'" ref="hourlyRef" v-model="hours" :submitted="submitted" />
-        <ContactSection ref="contactRef" :submitted="submitted" @submit="handleSubmit" />
+      <DropoffSection v-if="tripType !== 'hourly'" ref="dropoffRef" :submitted="submitted" @dropoff-coords="onDropoffCoords" />
+      <TripSummary v-if="tripType !== 'hourly'" :pickup-coords="pickupCoords" :dropoff-coords="dropoffCoords" :stop-coords="stopCoords" />
+      <HourlySection v-if="tripType === 'hourly'" ref="hourlyRef" v-model="hours" :submitted="submitted" />
+      <ContactSection ref="contactRef" :submitted="submitted" @submit="handleSubmit" />
 
         <p v-if="submitError" class="submit-error">{{ submitError }}</p>
         <p v-if="submitting" class="submitting-text">Submitting booking...</p>
@@ -56,14 +56,17 @@ function onStopCoords(coords: { lat: number; lng: number }[]) {
 function isValid(): boolean {
   if (!tripType.value) return false
   const p = pickupRef.value
-  const d = dropoffRef.value
   const c = contactRef.value
-  if (!p || !d || !c) return false
+  if (!p || !c) return false
   if (!p.pickupDate || !p.pickupTime) return false
   if (p.pickupTab === 'Location' && !p.pickupLocation) return false
   if (p.pickupTab === 'Airport' && !p.pickupAirport) return false
-  if (d.dropoffTab === 'Location' && !d.dropoffLocation) return false
-  if (d.dropoffTab === 'Airport' && !d.dropoffAirport) return false
+  if (tripType.value !== 'hourly') {
+    const d = dropoffRef.value
+    if (!d) return false
+    if (d.dropoffTab === 'Location' && !d.dropoffLocation) return false
+    if (d.dropoffTab === 'Airport' && !d.dropoffAirport) return false
+  }
   if (!c.phone) return false
   if (!c.passengers || Number(c.passengers) < 1) return false
   if (tripType.value === 'hourly') {
@@ -82,7 +85,7 @@ async function handleSubmit() {
   submitError.value = ''
 
   const p = pickupRef.value!
-  const d = dropoffRef.value!
+  const d = dropoffRef.value
   const c = contactRef.value!
 
   const payload: Record<string, any> = {
@@ -92,13 +95,16 @@ async function handleSubmit() {
     pickupTab: p.pickupTab,
     pickupLocation: p.pickupTab === 'Location' ? p.pickupLocation : '',
     pickupAirport: p.pickupTab === 'Airport' ? p.pickupAirport : '',
-    dropoffTab: d.dropoffTab,
-    dropoffLocation: d.dropoffTab === 'Location' ? d.dropoffLocation : '',
-    dropoffAirport: d.dropoffTab === 'Airport' ? d.dropoffAirport : '',
     stops: p.stops.filter(Boolean),
     phone: c.phone,
     passengers: Number(c.passengers),
     recognized: c.recognized
+  }
+
+  if (tripType.value !== 'hourly' && d) {
+    payload.dropoffTab = d.dropoffTab
+    payload.dropoffLocation = d.dropoffTab === 'Location' ? d.dropoffLocation : ''
+    payload.dropoffAirport = d.dropoffTab === 'Airport' ? d.dropoffAirport : ''
   }
 
   if (c.firstName || c.lastName) {

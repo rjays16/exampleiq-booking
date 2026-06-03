@@ -17,6 +17,14 @@
 <script setup lang="ts">
 defineProps<{ submitted: boolean }>()
 const hours = defineModel<string>({ default: '' })
+
+defineExpose({ hours })
+
+watch(hours, (val) => {
+  if (typeof val !== 'string') {
+    hours.value = String(val)
+  }
+})
 </script>
 
 <style scoped>

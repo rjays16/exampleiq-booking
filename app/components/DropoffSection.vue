@@ -52,6 +52,12 @@ const emit = defineEmits<{
 function onDropoffPlace(lat: number, lng: number) {
   emit('dropoff-coords', lat, lng)
 }
+
+defineExpose({
+  dropoffLocation,
+  dropoffAirport,
+  dropoffTab
+})
 </script>
 
 <style scoped>

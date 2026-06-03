@@ -4,42 +4,46 @@
 
     <div class="phone-field" :class="{ invalid: submitted && !phone }">
       <span class="flag">🇺🇸</span>
-      <input v-model="phone" type="text" placeholder="+1 XXX XXX XXXX" class="phone-input" />
+      <input v-model="phone" type="text" placeholder="+1 XXX XXX XXXX" class="phone-input" @blur="lookupPhone" />
       <p v-if="submitted && !phone" class="error-text">Phone number is required</p>
     </div>
 
-    <p class="warning-text">
-      We don't have that phone number on file. Please provide additional contact information.
-    </p>
+    <p v-if="recognized && greetingName" class="greeting-text">Welcome back, {{ greetingName }}!</p>
 
-    <div class="name-row">
-      <div class="name-field" :class="{ invalid: submitted && !firstName }">
-        <label class="floating-label">First name</label>
-        <div class="name-input">
-          <Icon name="lucide:user" class="field-icon" />
-          <input v-model="firstName" placeholder="First name" class="input" />
+    <template v-if="!recognized">
+      <p class="warning-text">
+        We don't have that phone number on file. Please provide additional contact information.
+      </p>
+
+      <div class="name-row">
+        <div class="name-field" :class="{ invalid: submitted && !firstName }">
+          <label class="floating-label">First name</label>
+          <div class="name-input">
+            <Icon name="lucide:user" class="field-icon" />
+            <input v-model="firstName" placeholder="First name" class="input" />
+          </div>
+          <p v-if="submitted && !firstName" class="error-text">Required</p>
         </div>
-        <p v-if="submitted && !firstName" class="error-text">Required</p>
-      </div>
 
-      <div class="name-field" :class="{ invalid: submitted && !lastName }">
-        <label class="floating-label">Last name</label>
-        <div class="name-input">
-          <Icon name="lucide:user" class="field-icon" />
-          <input v-model="lastName" placeholder="Last name" class="input" />
+        <div class="name-field" :class="{ invalid: submitted && !lastName }">
+          <label class="floating-label">Last name</label>
+          <div class="name-input">
+            <Icon name="lucide:user" class="field-icon" />
+            <input v-model="lastName" placeholder="Last name" class="input" />
+          </div>
+          <p v-if="submitted && !lastName" class="error-text">Required</p>
         </div>
-        <p v-if="submitted && !lastName" class="error-text">Required</p>
       </div>
-    </div>
 
-    <div class="email-field" :class="{ invalid: submitted && !email }">
-      <label class="floating-label">Email</label>
-      <div class="email-input">
-        <Icon name="lucide:mail" class="field-icon" />
-        <input v-model="email" placeholder="name@example.com" class="input" />
+      <div class="email-field" :class="{ invalid: submitted && !email }">
+        <label class="floating-label">Email</label>
+        <div class="email-input">
+          <Icon name="lucide:mail" class="field-icon" />
+          <input v-model="email" placeholder="name@example.com" class="input" />
+        </div>
+        <p v-if="submitted && !email" class="error-text">Email is required</p>
       </div>
-      <p v-if="submitted && !email" class="error-text">Email is required</p>
-    </div>
+    </template>
 
     <div class="passengers-section">
       <div class="passengers-question">
@@ -66,9 +70,47 @@ const firstName = ref('')
 const lastName = ref('')
 const email = ref('')
 const passengers = ref('')
+const recognized = ref(false)
+const greetingName = ref('')
 
 defineProps<{ submitted: boolean }>()
 defineEmits<{ submit: [] }>()
+
+function lookupPhone() {
+  const raw = phone.value.trim()
+  if (!raw) {
+    recognized.value = false
+    greetingName.value = ''
+    return
+  }
+
+  const stored = localStorage.getItem('booking_phone_' + raw)
+  if (stored) {
+    recognized.value = true
+    const data = JSON.parse(stored)
+    greetingName.value = data.firstName + ' ' + data.lastName
+  } else {
+    recognized.value = false
+    greetingName.value = ''
+  }
+}
+
+function storeContact() {
+  const raw = phone.value.trim()
+  if (!raw) return
+  const data = { firstName: firstName.value, lastName: lastName.value, email: email.value }
+  localStorage.setItem('booking_phone_' + raw, JSON.stringify(data))
+}
+
+defineExpose({
+  phone,
+  firstName,
+  lastName,
+  email,
+  passengers,
+  recognized,
+  storeContact
+})
 </script>
 
 <style scoped>

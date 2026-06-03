@@ -90,6 +90,15 @@ function addStop() {
 function removeStop(i: number) {
   stops.value.splice(i, 1)
 }
+
+defineExpose({
+  pickupDate,
+  pickupTime,
+  pickupLocation,
+  pickupAirport,
+  pickupTab,
+  stops
+})
 </script>
 
 <style scoped>

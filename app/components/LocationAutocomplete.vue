@@ -49,6 +49,7 @@ const props = defineProps<{
   icon?: string
   invalid?: boolean
   errorMsg?: string
+  types?: string[]
 }>()
 
 const emit = defineEmits<{
@@ -84,7 +85,7 @@ async function fetchPredictions(input: string) {
   try {
     const resp = await autocompleteService.getPlacePredictions({
       input,
-      types: ['address']
+      types: props.types || ['address']
     })
     predictions.value = resp.predictions
     showPredictions.value = true

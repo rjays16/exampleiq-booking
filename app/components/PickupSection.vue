@@ -35,16 +35,17 @@
       />
     </div>
 
-    <div v-if="pickupTab === 'Airport'" class="location-field" :class="{ invalid: submitted && !pickupAirport }">
-      <label class="floating-label">Airport</label>
-      <div class="location-input">
-        <div class="location-value">
-          <Icon name="lucide:plane" class="field-icon" />
-          <input v-model="pickupAirport" type="text" placeholder="Enter pickup airport" class="location-text" />
-        </div>
-        <Icon name="lucide:chevron-down" class="chevron" />
-      </div>
-      <p v-if="submitted && !pickupAirport" class="error-text">Pickup airport is required</p>
+    <div v-if="pickupTab === 'Airport'">
+      <LocationAutocomplete
+        v-model="pickupAirport"
+        placeholder="Enter pickup airport"
+        label="Airport"
+        icon="lucide:plane"
+        :invalid="submitted && !pickupAirport"
+        error-msg="Pickup airport is required"
+        :types="['airport']"
+        @place-changed="onPickupPlace"
+      />
     </div>
 
     <div v-for="(stop, i) in stops" :key="i" class="stop-row">

@@ -3,8 +3,26 @@
     <h2 class="section-title">Contact Information</h2>
 
     <div class="phone-field" :class="{ invalid: submitted && !phone }">
-      <span class="flag">🇺🇸</span>
-      <input v-model="phone" type="text" placeholder="+1 XXX XXX XXXX" class="phone-input" @blur="lookupPhone" />
+      <div class="country-select" ref="countryRef">
+        <button class="country-btn" @click="showCountries = !showCountries">
+          <span class="flag">{{ selectedCountry.flag }}</span>
+          <Icon name="lucide:chevron-down" class="chevron-sm" />
+        </button>
+        <div v-if="showCountries" class="country-dropdown">
+          <button
+            v-for="c in countries"
+            :key="c.code"
+            class="country-option"
+            :class="{ 'country-option-active': c.code === selectedCountry.code }"
+            @click="selectCountry(c)"
+          >
+            <span class="flag">{{ c.flag }}</span>
+            <span class="country-name">{{ c.name }}</span>
+            <span class="country-dial">{{ c.dial }}</span>
+          </button>
+        </div>
+      </div>
+      <input v-model="phone" type="text" :placeholder="selectedCountry.placeholder" class="phone-input" @blur="lookupPhone" />
       <p v-if="submitted && !phone" class="error-text">Phone number is required</p>
     </div>
 
@@ -72,6 +90,26 @@ const email = ref('')
 const passengers = ref('')
 const recognized = ref(false)
 const greetingName = ref('')
+const showCountries = ref(false)
+const countryRef = ref<HTMLElement>()
+
+const countries = [
+  { code: 'US', name: 'United States', flag: '🇺🇸', dial: '+1', placeholder: '+1 XXX XXX XXXX' },
+  { code: 'PH', name: 'Philippines', flag: '🇵🇭', dial: '+63', placeholder: '+63 XXX XXX XXXX' },
+  { code: 'JP', name: 'Japan', flag: '🇯🇵', dial: '+81', placeholder: '+81 XX XXXX XXXX' },
+  { code: 'GB', name: 'United Kingdom', flag: '🇬🇧', dial: '+44', placeholder: '+44 XXXX XXX XXX' },
+  { code: 'AU', name: 'Australia', flag: '🇦🇺', dial: '+61', placeholder: '+61 X XXXX XXXX' },
+  { code: 'CA', name: 'Canada', flag: '🇨🇦', dial: '+1', placeholder: '+1 XXX XXX XXXX' },
+  { code: 'SG', name: 'Singapore', flag: '🇸🇬', dial: '+65', placeholder: '+65 XXXX XXXX' },
+  { code: 'KR', name: 'South Korea', flag: '🇰🇷', dial: '+82', placeholder: '+82 XX XXXX XXXX' },
+]
+
+const selectedCountry = ref(countries[0])
+
+function selectCountry(c: typeof countries[0]) {
+  selectedCountry.value = c
+  showCountries.value = false
+}
 
 defineProps<{ submitted: boolean }>()
 defineEmits<{ submit: [] }>()
@@ -101,6 +139,16 @@ function storeContact() {
   const data = { firstName: firstName.value, lastName: lastName.value, email: email.value }
   localStorage.setItem('booking_phone_' + raw, JSON.stringify(data))
 }
+
+onMounted(() => {
+  function handleClick(e: MouseEvent) {
+    if (countryRef.value && !countryRef.value.contains(e.target as Node)) {
+      showCountries.value = false
+    }
+  }
+  document.addEventListener('click', handleClick)
+  onUnmounted(() => document.removeEventListener('click', handleClick))
+})
 
 defineExpose({
   phone,
@@ -132,7 +180,7 @@ defineExpose({
   align-items: center;
   border-radius: 4px;
   border: 1px solid #d9d9d9;
-  padding: 0 16px;
+  padding: 0 0 0 0;
   margin-bottom: 12px;
   flex-wrap: wrap;
 }
@@ -145,20 +193,97 @@ defineExpose({
   width: 100%;
   margin-top: 4px;
   margin-bottom: 4px;
+  padding: 0 16px;
+}
+
+.country-select {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.country-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 10px 0 14px;
+  height: 50px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-right: 1px solid #e0e0e0;
+}
+
+.country-btn:hover {
+  background: #f9f9f9;
 }
 
 .flag {
-  margin-right: 12px;
-  font-size: 18px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.chevron-sm {
+  width: 12px;
+  height: 12px;
+  color: #888;
+}
+
+.country-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  z-index: 100;
+  max-height: 280px;
+  overflow-y: auto;
+  min-width: 220px;
+}
+
+.country-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+}
+
+.country-option:hover {
+  background: #f5f5f5;
+}
+
+.country-option-active {
+  background: #faf9f4;
+}
+
+.country-name {
+  flex: 1;
+  color: #222;
+}
+
+.country-dial {
+  color: #888;
+  font-size: 13px;
 }
 
 .phone-input {
-  width: 100%;
+  flex: 1;
   background: transparent;
   border: none;
   outline: none;
   font-size: 15px;
-  flex: 1;
+  padding: 0 14px;
+  min-width: 0;
 }
 
 .warning-text {

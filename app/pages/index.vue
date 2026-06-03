@@ -4,6 +4,7 @@
       <BookingForm v-model="tripType" :submitted="submitted" />
       <PickupSection :submitted="submitted" @pickup-coords="onPickupCoords" />
       <DropoffSection :submitted="submitted" @dropoff-coords="onDropoffCoords" />
+      <TripSummary :pickup-coords="pickupCoords" :dropoff-coords="dropoffCoords" />
       <HourlySection v-if="tripType === 'hourly'" v-model="hours" :submitted="submitted" />
       <ContactSection :submitted="submitted" @submit="handleSubmit" />
     </div>

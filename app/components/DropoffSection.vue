@@ -63,12 +63,12 @@ defineExpose({
 
 <style scoped>
 .dropoff-section {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #222;
 }
@@ -81,14 +81,15 @@ defineExpose({
 
 .tab {
   padding: 8px 20px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 15px;
   cursor: pointer;
+  transition: all 0.15s;
 }
 
 .tab-active {
-  border: 1px solid #c8a548;
-  color: #c8a548;
+  border: 1px solid #c79a3b;
+  color: #c79a3b;
   background: #fff;
 }
 
@@ -96,5 +97,9 @@ defineExpose({
   border: 1px solid #d9d9d9;
   color: #666;
   background: #fff;
+}
+
+.tab-inactive:hover {
+  border-color: #c0c0c0;
 }
 </style>

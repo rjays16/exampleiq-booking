@@ -109,11 +109,27 @@ defineProps<{ submitted: boolean }>()
   .title {
     font-size: 22px;
   }
+
+  .trip-type {
+    height: 44px;
+  }
+
+  .btn {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
   .title {
     font-size: 20px;
+  }
+
+  .logo-wrapper {
+    margin-bottom: 16px;
+  }
+
+  .logo {
+    height: 38px;
   }
 }
 </style>

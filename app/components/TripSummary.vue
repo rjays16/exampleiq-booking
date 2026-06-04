@@ -126,10 +126,17 @@ watch(
   background: #e2e8f0;
 }
 
+@media (max-width: 768px) {
+  .summary-row {
+    padding: 12px 16px;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 480px) {
   .summary-row {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
     align-items: flex-start;
   }
 

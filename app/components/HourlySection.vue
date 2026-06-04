@@ -96,4 +96,10 @@ watch(hours, (val) => {
   font-size: 13px;
   color: #e53e3e;
 }
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 15px;
+  }
+}
 </style>

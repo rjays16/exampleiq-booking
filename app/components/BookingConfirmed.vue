@@ -145,11 +145,15 @@ defineProps<{
 
 @media (max-width: 768px) {
   .success-card {
-    padding: 32px 20px;
+    padding: 32px 24px;
   }
 
   .success-title {
     font-size: 24px;
+  }
+
+  .success-details {
+    padding: 16px 20px;
   }
 
   .detail-row {

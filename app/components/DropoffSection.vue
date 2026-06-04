@@ -102,4 +102,21 @@ defineExpose({
 .tab-inactive:hover {
   border-color: #c0c0c0;
 }
+
+@media (max-width: 768px) {
+  .tabs {
+    display: flex;
+  }
+
+  .tab {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 15px;
+  }
+}
 </style>

@@ -301,12 +301,6 @@ defineExpose({
     width: 100% !important;
   }
 
-  .location-text {
-    font-size: 13px;
-  }
-}
-
-@media (max-width: 480px) {
   .tabs {
     display: flex;
   }
@@ -316,12 +310,22 @@ defineExpose({
     text-align: center;
   }
 
-  .date-field {
-    width: 100% !important;
+  .location-text {
+    font-size: 13px;
   }
 
-  .time-field {
-    width: 100% !important;
+  .stop-row {
+    gap: 4px;
+  }
+
+  .remove-btn {
+    width: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 15px;
   }
 }
 </style>

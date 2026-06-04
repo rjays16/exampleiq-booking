@@ -424,6 +424,7 @@ defineExpose({
 @media (max-width: 768px) {
   .name-row {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .passengers-field {
@@ -434,6 +435,10 @@ defineExpose({
 @media (max-width: 480px) {
   .passengers-question {
     font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 15px;
   }
 }
 </style>

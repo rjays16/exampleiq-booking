@@ -37,18 +37,18 @@ defineProps<{ submitted: boolean }>()
 .logo-wrapper {
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 }
 
 .logo {
-  height: 70px;
+  height: 45px;
   width: auto;
 }
 
 .title {
   margin-bottom: 24px;
-  font-size: 40px;
-  font-weight: 400;
+  font-size: 24px;
+  font-weight: 600;
   font-style: italic;
   color: #232323;
   font-family: Georgia, serif;
@@ -56,9 +56,9 @@ defineProps<{ submitted: boolean }>()
 
 .trip-type {
   display: flex;
-  height: 46px;
+  height: 48px;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d8d8d8;
   margin-bottom: 32px;
 }
@@ -107,13 +107,13 @@ defineProps<{ submitted: boolean }>()
 
 @media (max-width: 768px) {
   .title {
-    font-size: 28px;
+    font-size: 22px;
   }
 }
 
 @media (max-width: 480px) {
   .title {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
 </style>

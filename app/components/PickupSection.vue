@@ -59,8 +59,8 @@
           @place-changed="(lat, lng) => onStopPlace(i, lat, lng)"
         />
       </div>
-      <button class="remove-btn" @click="removeStop(i)">
-        <Icon name="lucide:x" class="remove-icon" />
+      <button class="remove-btn" @click="removeStop(i)" title="Remove stop">
+        <Icon name="lucide:trash-2" class="remove-icon" />
       </button>
     </div>
 
@@ -118,12 +118,12 @@ defineExpose({
 
 <style scoped>
 .pickup-section {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #222;
 }
@@ -135,11 +135,11 @@ defineExpose({
 }
 
 .date-field {
-  width: 400px;
+  width: 240px;
 }
 
 .time-field {
-  width: 180px;
+  width: 130px;
 }
 
 .field-icon {
@@ -245,7 +245,7 @@ defineExpose({
 
 .stop-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
   margin-bottom: 8px;
 }
@@ -256,25 +256,39 @@ defineExpose({
 }
 
 .remove-btn {
-  background: none;
-  border: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  width: 52px;
+  height: 52px;
   margin-top: 8px;
+  transition: all 0.15s;
+}
+
+.remove-btn:hover {
+  border-color: #e53e3e;
+  background: #fef2f2;
 }
 
 .remove-icon {
-  width: 16px;
-  height: 16px;
-  color: #999;
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+  transition: color 0.15s;
 }
 
 .remove-btn:hover .remove-icon {
   color: #e53e3e;
+}
+
+.stop-row:last-child {
+  margin-bottom: 12px;
 }
 
 @media (max-width: 768px) {

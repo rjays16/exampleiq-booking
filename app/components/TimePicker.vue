@@ -70,10 +70,19 @@ onMounted(() => {
   align-items: center;
   padding: 0 16px;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   height: 52px;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.tp-trigger:hover {
+  border-color: #c0c0c0;
+}
+
+.tp-trigger:focus-within {
+  border-color: #c79a3b;
+  box-shadow: 0 0 0 2px rgba(199, 154, 59, 0.3);
 }
 
 .tp-trigger.invalid {
@@ -83,7 +92,7 @@ onMounted(() => {
 .tp-icon {
   width: 16px;
   height: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   margin-right: 12px;
   flex-shrink: 0;
 }
@@ -124,11 +133,11 @@ onMounted(() => {
 }
 
 .tp-option-selected {
-  background: #c8a548;
+  background: #c79a3b;
   color: #fff;
 }
 
 .tp-option-selected:hover {
-  background: #b8942f;
+  background: #a87e2f;
 }
 </style>

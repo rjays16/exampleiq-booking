@@ -115,10 +115,19 @@ onMounted(() => {
   align-items: center;
   padding: 0 16px;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   height: 52px;
-  transition: border-color 0.15s;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.dp-trigger:hover {
+  border-color: #c0c0c0;
+}
+
+.dp-trigger:focus-within {
+  border-color: #c79a3b;
+  box-shadow: 0 0 0 2px rgba(199, 154, 59, 0.3);
 }
 
 .dp-trigger.invalid {
@@ -128,7 +137,7 @@ onMounted(() => {
 .dp-icon {
   width: 16px;
   height: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   margin-right: 12px;
   flex-shrink: 0;
 }
@@ -166,7 +175,7 @@ onMounted(() => {
 .dp-nav {
   background: none;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 30px;
   height: 30px;
   cursor: pointer;
@@ -208,7 +217,7 @@ onMounted(() => {
 .dp-day {
   font-size: 13px;
   padding: 6px 0;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   color: #222;
 }
@@ -222,11 +231,11 @@ onMounted(() => {
 }
 
 .dp-day-selected {
-  background: #c8a548;
+  background: #c79a3b;
   color: #fff;
 }
 
 .dp-day-selected:hover {
-  background: #b8942f;
+  background: #a87e2f;
 }
 </style>

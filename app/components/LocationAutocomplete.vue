@@ -172,9 +172,15 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
   height: 52px;
   align-items: center;
   justify-content: space-between;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d9d9d9;
   padding: 0 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.location-input:focus-within {
+  border-color: #c79a3b;
+  box-shadow: 0 0 0 2px rgba(199, 154, 59, 0.3);
 }
 
 .location-value {
@@ -186,7 +192,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
 .field-icon {
   width: 16px;
   height: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   margin-right: 12px;
   flex-shrink: 0;
 }
@@ -224,7 +230,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
   right: 0;
   background: #fff;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   z-index: 100;
   max-height: 240px;

@@ -85,7 +85,7 @@ defineProps<{ submitted: boolean }>()
 
 .btn-active {
   background-color: #fffdf7;
-  color: #c8a548;
+  color: #c79a3b;
   font-weight: 500;
 }
 

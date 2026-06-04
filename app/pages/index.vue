@@ -153,7 +153,7 @@ async function handleSubmit() {
   padding: 12px 16px;
   background: #fef2f2;
   border: 1px solid #e53e3e;
-  border-radius: 4px;
+  border-radius: 6px;
   color: #e53e3e;
   font-size: 14px;
 }

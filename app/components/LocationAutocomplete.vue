@@ -253,7 +253,7 @@ onUnmounted(() => document.removeEventListener('click', onClickOutside))
 .prediction-icon {
   width: 14px;
   height: 14px;
-  color: #c8a548;
+  color: #c79a3b;
   flex-shrink: 0;
 }
 

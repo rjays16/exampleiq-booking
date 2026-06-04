@@ -145,7 +145,7 @@ defineExpose({
 .field-icon {
   width: 16px;
   height: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   margin-right: 12px;
   flex-shrink: 0;
 }
@@ -164,14 +164,14 @@ defineExpose({
 
 .tab {
   padding: 8px 20px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 15px;
   cursor: pointer;
 }
 
 .tab-active {
-  border: 1px solid #c8a548;
-  color: #c8a548;
+  border: 1px solid #c79a3b;
+  color: #c79a3b;
   background: #fff;
 }
 
@@ -207,7 +207,7 @@ defineExpose({
   height: 52px;
   align-items: center;
   justify-content: space-between;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d9d9d9;
   padding: 0 12px;
 }
@@ -236,7 +236,7 @@ defineExpose({
 
 .add-stop {
   font-size: 15px;
-  color: #c8a548;
+  color: #c79a3b;
   background: none;
   border: none;
   cursor: pointer;
@@ -258,7 +258,7 @@ defineExpose({
 .remove-btn {
   background: #fff;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   padding: 0;
   display: flex;

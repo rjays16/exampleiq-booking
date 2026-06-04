@@ -163,12 +163,12 @@ defineExpose({
 
 <style scoped>
 .contact-section {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #222;
 }
@@ -178,11 +178,17 @@ defineExpose({
   display: flex;
   min-height: 52px;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d9d9d9;
-  padding: 0 0 0 0;
+  padding: 0;
   margin-bottom: 12px;
   flex-wrap: wrap;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.phone-field:focus-within {
+  border-color: #c79a3b;
+  box-shadow: 0 0 0 2px rgba(199, 154, 59, 0.3);
 }
 
 .phone-field.invalid {
@@ -289,7 +295,7 @@ defineExpose({
 .warning-text {
   margin-bottom: 16px;
   font-size: 14px;
-  color: #c8a548;
+  color: #c79a3b;
 }
 
 .name-row {
@@ -318,9 +324,17 @@ defineExpose({
   display: flex;
   height: 52px;
   align-items: center;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d9d9d9;
   padding: 0 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.name-input:focus-within,
+.email-input:focus-within,
+.passengers-input:focus-within {
+  border-color: #c79a3b;
+  box-shadow: 0 0 0 2px rgba(199, 154, 59, 0.3);
 }
 
 .floating-label {
@@ -337,7 +351,7 @@ defineExpose({
 .field-icon {
   width: 16px;
   height: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   margin-right: 12px;
   flex-shrink: 0;
 }
@@ -373,7 +387,7 @@ defineExpose({
 .passengers-question {
   margin-bottom: 16px;
   font-size: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   font-weight: 500;
 }
 
@@ -392,19 +406,19 @@ defineExpose({
 
 .continue-btn {
   width: 100%;
-  height: 46px;
-  border-radius: 4px;
-  background-color: #c8a548;
+  height: 40px;
+  border-radius: 6px;
+  background-color: #c79a3b;
   color: #fff;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   border: none;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background-color 0.15s;
 }
 
 .continue-btn:hover {
-  opacity: 0.95;
+  background-color: #a87e2f;
 }
 
 @media (max-width: 768px) {

@@ -75,14 +75,14 @@ defineProps<{
 .success-wrapper {
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 40px;
 }
 
 .success-card {
   width: 100%;
   max-width: 520px;
   text-align: center;
-  padding: 48px 40px;
+  padding: 40px 32px;
 }
 
 .success-icon {
@@ -108,14 +108,14 @@ defineProps<{
 .success-msg {
   font-size: 14px;
   color: #888;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .success-details {
   text-align: left;
-  border: 1px solid #e8e3d6;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
-  background: #faf9f4;
+  background: #f8fafc;
   padding: 20px 24px;
 }
 
@@ -123,7 +123,7 @@ defineProps<{
   display: flex;
   justify-content: space-between;
   padding: 8px 0;
-  border-bottom: 1px solid #e8e3d6;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .detail-row:last-child {

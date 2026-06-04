@@ -136,13 +136,16 @@ async function handleSubmit() {
 <style scoped>
 .page {
   min-height: 100vh;
-  background-color: #fff;
+  background-color: #f8fafc;
+  padding: 20px 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 576px;
   margin: 0 auto;
-  padding: 24px 32px;
+  background: #fff;
+  padding: 32px;
 }
 
 .submit-error {
@@ -164,13 +167,19 @@ async function handleSubmit() {
 
 @media (max-width: 768px) {
   .container {
-    padding: 16px 20px;
+    padding: 24px;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 12px 16px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 650px) {
+  .container {
+    max-width: 100%;
   }
 }
 </style>

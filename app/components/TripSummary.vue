@@ -90,9 +90,9 @@ watch(
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 16px 24px;
-  background: #faf9f4;
-  border: 1px solid #e8e3d6;
+  padding: 14px 20px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
 }
 
@@ -105,7 +105,7 @@ watch(
 .summary-icon {
   width: 20px;
   height: 20px;
-  color: #c8a548;
+  color: #c79a3b;
   flex-shrink: 0;
 }
 
@@ -123,7 +123,7 @@ watch(
 .summary-divider {
   width: 1px;
   height: 28px;
-  background: #e0ddd0;
+  background: #e2e8f0;
 }
 
 @media (max-width: 480px) {

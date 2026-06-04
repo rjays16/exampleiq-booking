@@ -29,12 +29,12 @@ watch(hours, (val) => {
 
 <style scoped>
 .hourly-section {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .section-title {
   margin-bottom: 16px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #222;
 }
@@ -63,15 +63,21 @@ watch(hours, (val) => {
   display: flex;
   align-items: center;
   height: 52px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid #d9d9d9;
   padding: 0 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.hours-input-wrap:focus-within {
+  border-color: #c79a3b;
+  box-shadow: 0 0 0 2px rgba(199, 154, 59, 0.3);
 }
 
 .field-icon {
   width: 16px;
   height: 16px;
-  color: #c8a548;
+  color: #c79a3b;
   margin-right: 12px;
   flex-shrink: 0;
 }
